@@ -13,6 +13,16 @@ public class PatientResponseDTO {
     @AllArgsConstructor
     public static class JoinResultDTO {
         Long patientId;
-
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class LoginResponseDTO {
+        Long patientId;
+        private String token;
+    }
+
+
 }
