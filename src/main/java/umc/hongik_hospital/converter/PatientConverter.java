@@ -17,11 +17,11 @@ public class PatientConverter {
 
         Gender gender = null;
 
-        switch (request.getGender().ordinal()){
-            case 0:
+        switch (request.getGender()){
+            case MALE:
                 gender = Gender.MALE;
                 break;
-            case 1:
+            case FEMALE:
                 gender = Gender.FEMALE;
                 break;
         }
@@ -31,6 +31,13 @@ public class PatientConverter {
                 .residentNum(request.getResidentNum())
                 .gender(gender)
                 .password(encodedPassword)
+                .build();
+    }
+
+    public static PatientResponseDTO.LoginResponseDTO toLoginResponseDTO(Long patientId, String token) {
+        return PatientResponseDTO.LoginResponseDTO.builder()
+                .patientId(patientId)
+                .token(token)
                 .build();
     }
 }

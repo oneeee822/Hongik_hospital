@@ -1,6 +1,7 @@
 package umc.hongik_hospital.web.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,11 @@ public class PatientRestController {
 
         Patient patient = patientService.joinPatient(request);
         return ApiResponse.onSuccess(PatientConverter.toJoinResultDTO(patient));
+    }
+
+    @PostMapping("/login")
+    public ApiResponse<PatientResponseDTO.LoginResponseDTO> login(@RequestBody PatientRequestDTO.LoginRequestDTO request) {
+        return ApiResponse.onSuccess(patientService.login(request));
     }
 
 }
