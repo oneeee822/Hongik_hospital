@@ -25,5 +25,6 @@ public class Hospital {
     private String address;
 
     @OneToMany(mappedBy = "hospital", cascade = CascadeType.ALL)
-    private List<Department> departMentList = new ArrayList<>();
+    private List<Department> departmentList = new ArrayList<>();
 }
+

@@ -3,6 +3,8 @@ package umc.hongik_hospital.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Builder
@@ -22,5 +24,8 @@ public class Department {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
+
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
+    private List<Doctor> doctorList;
 
 }

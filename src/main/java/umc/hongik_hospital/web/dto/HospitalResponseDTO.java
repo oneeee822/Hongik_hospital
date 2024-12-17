@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 public class HospitalResponseDTO {
 
     @Builder
@@ -14,5 +16,15 @@ public class HospitalResponseDTO {
     public static class ListResponseDTO {
         private String hname;
         private String address;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class DepartmentListDTO {
+        private String hname;
+        private String address;
+        private List<DepartmentResponseDTO> departmentList;
     }
 }
