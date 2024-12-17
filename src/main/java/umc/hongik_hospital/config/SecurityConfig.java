@@ -16,7 +16,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable) // CSRF 보호 비활성화 (필요 시 활성화)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/patients/**").permitAll() // 회원가입 경로 허용
+                        .requestMatchers("/patients/**","/hospitals/**").permitAll() //경로 허용
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/error").permitAll() // Swagger 허용
                         .anyRequest().authenticated() // 그 외의 요청은 인증 필요
                 )
