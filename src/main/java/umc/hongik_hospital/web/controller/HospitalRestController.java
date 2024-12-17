@@ -2,6 +2,7 @@ package umc.hongik_hospital.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import umc.hongik_hospital.apiPayload.ApiResponse;
@@ -22,4 +23,11 @@ public class HospitalRestController {
         List<HospitalResponseDTO.ListResponseDTO> response = hospitalService.getAllHospitals();
         return ApiResponse.onSuccess(response);
     }
+
+    @GetMapping("/{id}")
+    public ApiResponse<HospitalResponseDTO.DepartmentListDTO> getHospitalWithDepartments(@PathVariable Long id) {
+        HospitalResponseDTO.DepartmentListDTO response = hospitalService.getHospitalWithDepartments(id);
+        return ApiResponse.onSuccess(response);
+    }
 }
+
