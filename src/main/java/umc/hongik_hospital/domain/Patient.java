@@ -2,6 +2,8 @@ package umc.hongik_hospital.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import umc.hongik_hospital.domain.enums.Gender;
 
 import java.util.ArrayList;
@@ -9,6 +11,8 @@ import java.util.List;
 
 @Entity
 @Getter
+@DynamicUpdate
+@DynamicInsert
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -18,9 +22,13 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer age;
+    @Column(nullable = false, length = 6)
+    private String residentNum;
 
-    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.ORDINAL)
     @Column(columnDefinition = "VARCHAR(10)")
     private Gender gender;
 
