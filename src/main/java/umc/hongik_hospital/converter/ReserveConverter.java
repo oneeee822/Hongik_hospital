@@ -20,14 +20,14 @@ public class ReserveConverter {
                 .build();
     }
 
-    public static ReserveResponseDTO.CreateResponseDTO toResponseDTO(Reserve reserve, Hospital hospital, Department department) {
+    public static ReserveResponseDTO.CreateResponseDTO toResponseDTO(Reserve reserve) {
         return ReserveResponseDTO.CreateResponseDTO.builder()
-                .pname(reserve.getPatient().getPname())    // 환자 이름
-                .hname(hospital.getHname())               // 병원 이름
-                .dname(department.getDname())           // 부서 이름
-                .docname(reserve.getDoctor().getDocname())       // 의사 이름
-                .appointmentDate(reserve.getAppointmentDate())   // 진료 날짜
-                .createdAt(reserve.getCreatedAt())               // 예약 생성 시간
+                .pname(reserve.getPatient().getPname())
+                .hname(reserve.getDoctor().getDepartment().getHospital().getHname())
+                .dname(reserve.getDoctor().getDepartment().getDname())
+                .docname(reserve.getDoctor().getDocname())
+                .appointmentDate(reserve.getAppointmentDate())
+                .createdAt(reserve.getCreatedAt())
                 .build();
     }
 }
