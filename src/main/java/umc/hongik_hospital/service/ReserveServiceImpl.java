@@ -56,4 +56,21 @@ public class ReserveServiceImpl implements ReserveService {
         return ReserveConverter.toResponseDTO(reserve);
     }
 
+    @Override
+    public void deleteReserve(Long reserveId) {
+        // SecurityContext에서 사용자 ID 가져오기
+        Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // 예약 조회
+        Reserve reserve = reserveRepository.findById(reserveId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 ID의 예약을 찾을 수 없습니다."));
+
+        // 예약을 생성한 환자인지 확인
+        if (!reserve.getPatient().getId().equals(userId)) {
+            throw new IllegalArgumentException("자신의 예약만 삭제할 수 있습니다.");
+        }
+
+        // 예약 삭제
+        reserveRepository.delete(reserve);
+    }
 }
