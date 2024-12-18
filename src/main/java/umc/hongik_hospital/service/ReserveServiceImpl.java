@@ -46,7 +46,14 @@ public class ReserveServiceImpl implements ReserveService {
         reserveRepository.save(reserve);
 
         // 예약 응답 DTO 생성
-        return ReserveConverter.toResponseDTO(reserve, hospital, department);
+        return ReserveConverter.toResponseDTO(reserve);
+    }
+
+    @Override
+    public ReserveResponseDTO.CreateResponseDTO getReserveById(Long id) {
+        Reserve reserve = reserveRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 ID의 예약을 찾을 수 없습니다."));
+        return ReserveConverter.toResponseDTO(reserve);
     }
 
 }
