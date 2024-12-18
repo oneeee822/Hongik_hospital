@@ -30,4 +30,11 @@ public class ReserveRestController {
         ReserveResponseDTO.CreateResponseDTO response = reserveService.getReserveById(id);
         return ApiResponse.onSuccess(response);
     }
+
+    // 예약 삭제
+    @DeleteMapping("/{id}")
+    public ApiResponse<Void> deleteReserve(@PathVariable Long id) {
+        reserveService.deleteReserve(id);
+        return ApiResponse.onSuccess(null);
+    }
 }
