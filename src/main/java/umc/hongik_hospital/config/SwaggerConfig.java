@@ -11,29 +11,29 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SwaggerConfig {
-
     @Bean
-    public OpenAPI UMCstudyAPI() {
+    public OpenAPI umcStudyAPI() {
         Info info = new Info()
                 .title("UMC Server WorkBook API")
                 .description("UMC Server WorkBook API 명세서")
                 .version("1.0.0");
 
-        String jwtSchemeName = "JWT TOKEN";
-        // API 요청헤더에 인증정보 포함
+        String jwtSchemeName = "BearerAuth";
+
+        // SecurityRequirement 설정 (API 요청 시 인증 정보 필요)
         SecurityRequirement securityRequirement = new SecurityRequirement().addList(jwtSchemeName);
-        // SecuritySchemes 등록
-        Components components = new Components()
-                .addSecuritySchemes(jwtSchemeName, new SecurityScheme()
-                        .name(jwtSchemeName)
-                        .type(SecurityScheme.Type.HTTP) // HTTP 방식
-                        .scheme("bearer")
-                        .bearerFormat("JWT"));
+
+        // SecurityScheme 등록 (Bearer 토큰 설정)
+        SecurityScheme securityScheme = new SecurityScheme()
+                .name(jwtSchemeName)
+                .type(SecurityScheme.Type.HTTP)
+                .scheme("bearer")
+                .bearerFormat("JWT")
+                .in(SecurityScheme.In.HEADER);
 
         return new OpenAPI()
-                .addServersItem(new Server().url("/"))
                 .info(info)
-                .addSecurityItem(securityRequirement)
-                .components(components);
+                .components(new Components().addSecuritySchemes(jwtSchemeName, securityScheme))
+                .addSecurityItem(securityRequirement);
     }
 }

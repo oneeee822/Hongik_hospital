@@ -41,7 +41,7 @@ public class PatientServiceImpl implements PatientService {
         }
 
         // JWT 토큰 생성
-        String token = jwtUtil.generateToken(request.getPname());
+        String token = jwtUtil.generateToken(patient.getId());
 
 
         return PatientConverter.toLoginResponseDTO(patient.getId(), token);
