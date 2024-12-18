@@ -22,31 +22,30 @@ public class JwtUtil {
     }
 
     // JWT 토큰 생성
-    public String generateToken(String username) {
+    public String generateToken(Long userId) {
         long expirationTimeInMillis = Duration.ofHours(10).toMillis();
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(String.valueOf(userId))  // 사용자 ID를 문자열로 설정
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationTimeInMillis))
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
 
-    // 토큰에서 사용자 이름 추출
-    public String extractUsername(String token) {
-        return extractAllClaims(token).getSubject();
+    // 토큰에서 사용자 Id 추출
+    public Long extractUserId(String token) {
+        return Long.parseLong(extractAllClaims(token).getSubject());
     }
-
     // 토큰 만료 여부 확인
     public boolean isTokenExpired(String token) {
         return extractAllClaims(token).getExpiration().before(new Date());
     }
 
     // 토큰 검증
-    public boolean validateToken(String token, String username) {
+    public boolean validateToken(String token, Long patientId) {
         try {
-            String extractedUsername = extractUsername(token);
-            return username.equals(extractedUsername) && !isTokenExpired(token);
+            Long extractedUserId = extractUserId(token);
+            return patientId.equals(extractedUserId) && !isTokenExpired(token);
         } catch (Exception e) {
             return false; // 토큰이 올바르지 않을 경우 false 반환
         }

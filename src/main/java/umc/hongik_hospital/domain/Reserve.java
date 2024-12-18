@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import umc.hongik_hospital.domain.enums.Rstatus;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
@@ -22,6 +23,9 @@ public class Reserve {
     private Rstatus rstatus;
 
     private LocalTime createdAt;
+
+    @Column(nullable = false)
+    private LocalDate appointmentDate;
 
     private double price;
 
